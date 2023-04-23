@@ -27,13 +27,18 @@ public class TaskController {
     }
 
     @PostMapping
-    public void addTask(@RequestBody Task task) {
-        this.taskService.addTask(task);
+    public Task addTask(@RequestBody Task task) {
+        return this.taskService.addTask(task);
     }
 
     @PutMapping("/{id}")
-    public void updateTask(@PathVariable Long id, @RequestBody Task task) {
-        this.taskService.updateTask(id, task);
+    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+        return this.taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        this.taskService.deleteTask(id);
     }
 
 }

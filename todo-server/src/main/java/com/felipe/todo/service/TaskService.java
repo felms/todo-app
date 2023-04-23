@@ -24,15 +24,11 @@ public class TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Não foi encontrada tarefa com o id: " + id));
     }
 
-    public void addTask(Task task) {
-        boolean exists = this.taskRepository.existsById(task.getId());
-
-        if (!exists) {
-            this.taskRepository.save(task);
-        }
+    public Task addTask(Task task) {
+        return this.taskRepository.save(task);
     }
 
-    public void updateTask(Long id, Task task) {
+    public Task updateTask(Long id, Task task) {
         Task taskToUpdate = this.taskRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Não foi encontrada tarefa com o id: " + id));
 
@@ -40,7 +36,11 @@ public class TaskService {
         taskToUpdate.setDueDate(task.getDueDate());
         taskToUpdate.setCompleted(task.getCompleted());
 
-        this.taskRepository.save(task);
+        return this.taskRepository.save(task);
+    }
+
+    public void deleteTask(Long id) {
+        this.taskRepository.deleteById(id);
     }
 
 }

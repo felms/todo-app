@@ -1,19 +1,25 @@
 package com.felipe.todo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long Id;
 
     private String description;
+    @CreationTimestamp
     private LocalDateTime creationDate;
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
     private Boolean completed;
 
     public Task(){
@@ -44,11 +50,11 @@ public class Task {
         this.creationDate = creationDate;
     }
 
-    public LocalDateTime getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
