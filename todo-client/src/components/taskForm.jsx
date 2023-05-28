@@ -1,4 +1,4 @@
-const TaskForm = ({allTasks, updateTask}) => {
+const TaskForm = ({allTasks, updateTask, toggleVisible}) => {
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
@@ -12,11 +12,15 @@ const TaskForm = ({allTasks, updateTask}) => {
         updateTask(id, updatedTsk); 
     };
 
+    const handleClicked = () => {
+        toggleVisible();
+    };
+
     return (
         <table>
             <thead>
                 <tr>
-                    <th colSpan={4}><pre>Tarefas</pre>
+                    <th colSpan={4}><pre>Tasks</pre>
                 </th></tr>
                 <tr>
                     <td>Description</td>
@@ -36,12 +40,11 @@ const TaskForm = ({allTasks, updateTask}) => {
                     </tr>
                     );
                 })}
-                <tr colSpan={4}><td colSpan={4}></td></tr>
+                <tr colSpan={4}><td colSpan={4}> <button type="button" className="btn" onClick={handleClicked}>Add Task</button></td></tr>
             </tbody>
             
         </table>
     );
-
 
 };
 
