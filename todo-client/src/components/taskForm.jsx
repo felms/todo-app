@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+const TaskForm = ({allTasks, updateTask}) => {
 
-const TaskForm = () => {
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})
+    };
 
-    const [tasks, setTasks] = useState([]);
-
-    useEffect(() => {
-
-        fetch("http://localhost:8080/api/tasks")
-            .then((response) => response.json())
-            .then(data => setTasks(data))
-            .catch((err) => console.log(`Erro: ${err.message}`));
-    }, []);
+    const handleChecked = (e) => {
+        const id = e.target.id;
+        let task = allTasks.filter(task => task.id == id)[0];
+        const updatedTsk = {...task, completed: !task.completed};
+        
+        updateTask(id, updatedTsk); 
+    };
 
     return (
         <table>
             <thead>
                 <tr>
-                    <th colSpan={4}><pre>"Tarefas"</pre>
+                    <th colSpan={4}><pre>Tarefas</pre>
                 </th></tr>
                 <tr>
                     <td>Description</td>
@@ -26,16 +26,17 @@ const TaskForm = () => {
                 </tr>
             </thead>
             <tbody>
-                {tasks.map((task) => {
+                {allTasks.map((task) => {
                     return (
                     <tr key={task.id}>
                         <td>{task.description}</td>
-                        <td>{task.creationDate}</td>
-                        <td>{task.dueDate}</td>
-                        <td>{task.completed}</td>
+                        <td>{formatDate(task.creationDate)}</td>
+                        <td>{formatDate(task.dueDate)}</td>
+                        <td><input type="checkbox" id={task.id} name={`checkBox${task.id}`} checked={task.completed} onChange={handleChecked}></input></td>
                     </tr>
                     );
                 })}
+                <tr colSpan={4}><td colSpan={4}></td></tr>
             </tbody>
             
         </table>
@@ -44,4 +45,4 @@ const TaskForm = () => {
 
 };
 
-export default TaskForm
+export default TaskForm;
